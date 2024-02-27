@@ -23,14 +23,15 @@ app.use(express.static("public")); // for serving static files  (public folder)
 app.use(cookieParser()); // for parsing cookies
 
 // router imports
-import userRouter from "./routes/user.routes.js";
 import condoRouter from "./routes/condo.routes.js";
 
 // router diclarations
-app.use("/api/v1/users", userRouter);
+
 app.use("/api/v1/condo", condoRouter);
 
-// Define your error handling middleware
+// Define your error handling middleware (send a error message in fronted if error occurs)
+// Backend Pass The Error Show in Fronted but
+// note : if you Backend Code and show a error in Terminal for comment it
 app.use((err, req, res, next) => {
   if (err instanceof ApiError) {
     // If the error is an instance of ApiError, send the error message as the response

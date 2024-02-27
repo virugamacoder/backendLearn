@@ -1,5 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const condocontractorSchema = new mongoose.Schema(
   {
@@ -19,6 +20,7 @@ const condocontractorSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
       index: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -48,11 +50,9 @@ const condocontractorSchema = new mongoose.Schema(
     },
     companyFaxNo: {
       type: String,
-      required: true,
     },
     insurance: {
       type: String,
-      required: true,
     },
     service: {
       type: [String],
@@ -70,9 +70,13 @@ const condocontractorSchema = new mongoose.Schema(
       required: true,
     },
     designation: {
-      type: String,
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: "Designation",
     },
+    area: [{
+      type: Schema.Types.ObjectId,
+      ref: "Cityarea"
+    }],
     rememberMe: {
       type: Boolean,
       required: true,
@@ -85,6 +89,10 @@ const condocontractorSchema = new mongoose.Schema(
       type: String,
       enum: ["pending", "approved", "rejected"],
       default: "pending",
+    },
+    refreshToken: {
+      type: String,
+      requried: true,
     },
   },
   {
